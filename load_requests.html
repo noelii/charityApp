@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="donation saves lifes" /> 
+<meta property="og:description" content="DONATE TO HELP PEOPLE IN TROUBLE" /> 
+<meta property="og:image" content="http://charity.potex.co.tz/dist/img/logo.jpg" /><meta property="og:image" content="http://www.[ourwebsite].com/overdriven-blues-music-tshirt-art-black.JPG" />
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://charity.potex.co.tz/ui/request.html" />
+<meta property="og:site_name" content="the charity system" />      
+<meta name="title" content="the best way for your donation" />
+<meta name="description" content="donate to save life, make the worl a better place" />
+<link rel="image_src" href="http://charity.potex.co.tz/dist/img/logo.jpg" />
+
+
+  <title>charity main</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="plugins/jsPDF-1.3.2/dist/jsPDF.min.js"></script>
+  
+  <script src="sweet.js"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0" nonce="XuOGPJqz"></script>
+  <script>
+  $('document').ready(function(){
+  
+
+  $.get("eng/controllers/controller.main.php",
+  {
+    request:"allrequests"
+    
+  },
+  function(data){
+   
+   var dataobj=$.parseJSON(data);
+   var totelem="";
+ 
+     for(var z in dataobj.name)
+     {
+       var img=dataobj.img[z];
+       var status=dataobj.status[z];
+       var name=dataobj.name[z];
+       var title=dataobj.title[z];
+       var budget=dataobj.budget[z];
+       var desc=dataobj.desc[z];
+       var idd=dataobj.ids[z];
+       var reqimages=dataobj.request_images[z];
+       var elem='<div class="content">';
+          elem+='<div class="container" id="reqq">';
+          elem+='<div class="card">';
+          elem+='<div class="card-header p-2 " >';
+          elem+='<div class="user-block" style="margin-right:5%" style="position:relative">';
+          elem+='<img class="img-circle img-bordered-sm" src="dist/img/'+img+'">';
+          if($.trim(status)=="verified")
+         {
+           elem+='<span style="position:absolute;text-align:center;margin-left:-10px"><i class="fa fa-check-circle" style="font-size:15px;color:blue"></i></span>';
+          }
+          elem+='<span class="username">';
+          elem+='<a href="#">'+name+'</a>';
+          elem+='</span>';
+          elem+='</div>';
+          elem+='<div class="row">';
+          elem+='<div class="col-lg-5">';
+          elem+='<span><b>'+title+'</b></span>';
+          elem+='</div>';
+          elem+='<div class="col-md-4">';
+          elem+='<img class="img-circle img-bordered-sm" src="dist/img/beg.png" alt="beg icon" style="height:85%;width:20%">';
+          elem+='<span>'+budget+'TZS required</span>';
+          elem+='</div>';
+          elem+='<div class="col-md-3">';
+          elem+='<span>';
+          elem+='<a href="#" class="link-black text-sm">';
+          elem+='<button style="font-size:22px; border:solid 1px #ccc;" id="'+idd+'" data-toggle="modal" data-target="#modal-default">Donate<i class="fas fa-donate" style="font-size:24px;color:blue"></i></button>';
+          elem+='</a>';
+          elem+='</span>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='<div class="card-body" style="border:none">';
+          elem+='<div class="tab-content">';
+          elem+='<div class="active tab-pane" id="activity">';
+          elem+='<div class="post">';
+          elem+='<div class="container ">';
+          elem+='<div class="row"><div class="col-ms-12">'+desc+'</div></div>';
+          elem+='<div class="row" style="margin-bottom:10px;margin-top:10px">';
+           
+            for(var i in reqimages)
+            {
+              elem+='<div class="col-md-3"><a href="data/'+reqimages[i]+'"><img src="data/'+reqimages[i]+'" class="img-responsive img-thumbnail" style="float:left;width:200px;height:100px;margin-left:5px" /></a></div>';
+            }
+
+            
+          elem+='</div>';
+          elem+='<div class="card card-primary collapsed-card border-0" style="border:none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;">';
+          elem+='<div class="" style="backgroundColor:white;border-shadow:2px 2px 2px #ccd;">';
+          elem+='</span>';
+          
+          elem+='<div class="card-tools">';
+          elem+='<button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">';
+         // elem+='<i class="fas fa-minus"></i>';
+          elem+='</button>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='<div class="card-body" style="border-color:white">';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          totelem+=elem;  
+
+         
+                  
+                    //<h3 class="card-title">General account information</h3>
+       
+     }
+   
+   
+   $('#reqrapper').append(totelem);
+   $('#loader').hide();
+    
+  
+    
+    
+  });
+
+  var idx=""; //request id;
+  $('#reqrapper').click(function(z){
+  //z.preventDefault();
+ if(z.target.tagName=="BUTTON")
+ {
+  idx=parseInt(z.target.attributes.id.value);
+ // swal("",""+idx,"info");
+  /*$.get("../eng/controllers/controller.ngo.php",
+    {
+    request: "deletefile",
+    id:idx
+    },
+  function(data){
+    load_uploads();
+  }
+  );*/
+ }
+});
+
+//the comments
+
+$('textarea').eq(3).focus(function(z){
+  //z.preventDefault();
+  var idx1=parseInt(z.target.attributes.id.value);
+ swal("",""+idx1,"info");
+ if(z.target.tagName=="input")
+ {
+
+  /*$.get("../eng/controllers/controller.ngo.php",
+    {
+    request: "deletefile",
+    id:idx
+    },
+  function(data){
+    load_uploads();
+  }
+  );*/
+ }
+});
+$('.card').each(function(index,obj){
+
+console.log(index);
+
+
+
+});
+
+$('#req').click(function(r){
+
+r.preventDefault();
+
+var recom=$('#recom').val().toString();
+var amount=parseFloat($('#amount').val().toString());
+var currency=$('#currency').val();
+var cardnum=$('#cardnum').val();
+
+if(cardnum==""){swal("please enter card number","","error"); return false;}
+var req="donate";
+
+if(!isNaN(amount) && cardnum!="")
+{
+$.get("eng/controllers/controller.donor.php",
+  {
+  request: req,
+  rec:recom,
+  amount:amount,
+  currency:currency,
+  cardnum:cardnum,
+  reqid:idx
+  },
+function(data){
+  if(data=="fail"){swal("donation failed, try again","","info");}
+  else{
+   
+    Swal.fire({
+  title: '<small>Donation successful</small>',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  cancelButtonText: 'Close'
+    }).then((result) => {
+  if (result.isConfirmed) {
+
+  }
+});
+  }
+
+
+   
+   $('#amount').val("");
+   $('#recom').val("");
+ 
+});
+}else{ swal("please enter amount","","info"); }
+
+});
+
+
+
+
+
+});
+  function share(x)
+  {
+    var com=encodeURIComponent(x.id); 
+    window.open("https://www.facebook.com/sharer.php?u=http://charity.potex.co.tz/ui/request.html?postid="+com);
+    //alert(content);
+  }
+
+  function comment(y)
+  {
+    //get the id of the request
+    //y.preventDefault();
+    
+    var reqid=y.id;
+    var comment=y.value;
+   // alert(comment);
+    if (comment.length == 0) {
+      swal("please type a comment","","info");
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            // swal(this.responseText,"","info");
+                if(this.responseText=="no"){ alert("oops! unknown problem, try again","","info");}
+                else{getcomno(y);get_all_comments(y);var elem=y.parentNode.parentNode.parentNode.classList.remove('collapsed-card');y.value=""; }
+            }
+        };
+        xmlhttp.open("GET", "eng/controllers/controller.donor.php?com=" + comment+"&&reqid="+reqid+"&&request=comment", true);
+        xmlhttp.send();
+    }
+
+  }
+  function getcomno(z)
+  {
+    var reqid=z.id;
+    var elem=z.parentNode.parentNode.querySelector('.far');
+   // alert(comment);
+  
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var obj = JSON.parse(xmlhttp.responseText);
+              for(var z in obj .name)
+              {
+                var comno=obj.comno[z]; 
+                elem.innerHTML="comments("+comno+")";
+          
+              }
+    
+            }
+        };
+        xmlhttp.open("GET", "eng/controllers/controller.main.php?reqid="+reqid+"&&request=onereq", true);
+        xmlhttp.send();
+        
+       //alert(elem);
+
+  }
+
+  function get_all_comments(c)
+  {
+    var reqid=c.id;
+    var elem=c.parentNode.parentNode.parentNode.querySelector('.card-body');
+    //swal(elem.parentNode,"","info");
+
+    var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              
+              var obj = JSON.parse(xmlhttp.responseText);
+              var content="";
+              for(var z in obj.fullname)
+              {
+                var img=obj.img[z];
+                var fullname=obj.fullname[z];
+                var time=obj.time[z];
+                var date=obj.date[z];
+                var comment=obj.thecomment[z];
+       
+                    content+='<div class="card" style="border-radius:30px;max-width:90%;height:fit-content;height:-moz-fit-content;height:-webkit-fit-content;margin-left:5%;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;background-color:#edf8ff">';
+                    content+='<div class="card-body">';
+  
+                    content+='<a href="#" class="brand-link" >';
+                    content+='<img src="dist/img/'+img+'"  alt="charity system" class="brand-image img-circle elevation-3" style="opacity:1">';
+                    content+='<span class="brand-text font-weight-light" style="font-weight: bold; color: rgb(152, 29, 223);" >'+fullname+'</span>';
+                    content+='</a>';
+                    content+='<p style="margin-left:20%">'+comment+'</p>';
+                    content+='<p style="margin-left:60%; color:#aaa; font-size:13px">'+date+'&nbsp&nbsp &nbsp &nbsp '+time+'</p>';
+                    content+='</div>';
+                    //content+='<div class="card-body">'
+    
+      
+                    //content+='</div>';
+  
+                    content+='</div>';
+          
+              }
+
+              elem.innerHTML=content;
+    
+            }
+        };
+        xmlhttp.open("GET", "eng/controllers/controller.main.php?reqid="+reqid+"&&request=allcom", true);
+        xmlhttp.send();
+
+
+
+  }
+
+  </script>
+</head>
+<body class="hold-transition layout-top-nav">
+  <!-- Navbar -->
+
+  <!-- /.navbar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" id="reqrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Donations requests </h1>
+          </div><!-- /.col -->
+      
+      </div><!-- /.container-fluid -->
+    </div>
+    <div class="tab-loading" id="loader" style="margin-left: 35%;margin-top: 10%;">
+      <div>
+        <h2 class="display-4">loading <i class="fa fa-sync fa-spin"></i></h2>
+      </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    <div class="container" id="myhandler" style="background-color:#ccd;display:none"></div>
+
+<!-- /.content -->
+<div class="modal fade" id="modal-default" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="color:  rgb(152, 29, 223);">Donate</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  <div class="form-group">
+    <label for="inputClientCompany"><i class="fa fa-money" aria-hidden="true" style="font-size:27px"></i>
+      Amount</label>
+    <input type="text" id="amount" class="form-control" placeholder="ex 12000" required>
+  </div>
+  <div class="form-group">
+    <label for="inputClientCompany"><i class="fa fa-dollar" style="font-size:27px"></i>Currency</label>
+    <select id="currency" class="form-control">
+      <option value="USD" label="US dollar">USD</option>
+    <option value="EUR" label="Euro">EUR</option>
+    <option value="JPY" label="Japanese yen">JPY</option>
+    <option value="GBP" label="Pound sterling">GBP</option>
+    <option disabled>──────────</option>
+    <option value="AED" label="United Arab Emirates dirham">AED</option>
+    <option value="AFN" label="Afghan afghani">AFN</option>
+    <option value="ALL" label="Albanian lek">ALL</option>
+    <option value="AMD" label="Armenian dram">AMD</option>
+    <option value="ANG" label="Netherlands Antillean guilder">ANG</option>
+    <option value="AOA" label="Angolan kwanza">AOA</option>
+    <option value="ARS" label="Argentine peso">ARS</option>
+    <option value="AUD" label="Australian dollar">AUD</option>
+    <option value="AWG" label="Aruban florin">AWG</option>
+    <option value="AZN" label="Azerbaijani manat">AZN</option>
+    <option value="BAM" label="Bosnia and Herzegovina convertible mark">BAM</option>
+    <option value="BBD" label="Barbadian dollar">BBD</option>
+    <option value="BDT" label="Bangladeshi taka">BDT</option>
+    <option value="BGN" label="Bulgarian lev">BGN</option>
+    <option value="BHD" label="Bahraini dinar">BHD</option>
+    <option value="BIF" label="Burundian franc">BIF</option>
+    <option value="BMD" label="Bermudian dollar">BMD</option>
+    <option value="BND" label="Brunei dollar">BND</option>
+    <option value="BOB" label="Bolivian boliviano">BOB</option>
+    <option value="BRL" label="Brazilian real">BRL</option>
+    <option value="BSD" label="Bahamian dollar">BSD</option>
+    <option value="BTN" label="Bhutanese ngultrum">BTN</option>
+    <option value="BWP" label="Botswana pula">BWP</option>
+    <option value="BYN" label="Belarusian ruble">BYN</option>
+    <option value="BZD" label="Belize dollar">BZD</option>
+    <option value="CAD" label="Canadian dollar">CAD</option>
+    <option value="CDF" label="Congolese franc">CDF</option>
+    <option value="CHF" label="Swiss franc">CHF</option>
+    <option value="CLP" label="Chilean peso">CLP</option>
+    <option value="CNY" label="Chinese yuan">CNY</option>
+    <option value="COP" label="Colombian peso">COP</option>
+    <option value="CRC" label="Costa Rican colón">CRC</option>
+    <option value="CUC" label="Cuban convertible peso">CUC</option>
+    <option value="CUP" label="Cuban peso">CUP</option>
+    <option value="CVE" label="Cape Verdean escudo">CVE</option>
+    <option value="CZK" label="Czech koruna">CZK</option>
+    <option value="DJF" label="Djiboutian franc">DJF</option>
+    <option value="DKK" label="Danish krone">DKK</option>
+    <option value="DOP" label="Dominican peso">DOP</option>
+    <option value="DZD" label="Algerian dinar">DZD</option>
+    <option value="EGP" label="Egyptian pound">EGP</option>
+    <option value="ERN" label="Eritrean nakfa">ERN</option>
+    <option value="ETB" label="Ethiopian birr">ETB</option>
+    <option value="EUR" label="EURO">EUR</option>
+    <option value="FJD" label="Fijian dollar">FJD</option>
+    <option value="FKP" label="Falkland Islands pound">FKP</option>
+    <option value="GBP" label="British pound">GBP</option>
+    <option value="GEL" label="Georgian lari">GEL</option>
+    <option value="GGP" label="Guernsey pound">GGP</option>
+    <option value="GHS" label="Ghanaian cedi">GHS</option>
+    <option value="GIP" label="Gibraltar pound">GIP</option>
+    <option value="GMD" label="Gambian dalasi">GMD</option>
+    <option value="GNF" label="Guinean franc">GNF</option>
+    <option value="GTQ" label="Guatemalan quetzal">GTQ</option>
+    <option value="GYD" label="Guyanese dollar">GYD</option>
+    <option value="HKD" label="Hong Kong dollar">HKD</option>
+    <option value="HNL" label="Honduran lempira">HNL</option>
+    <option value="HKD" label="Hong Kong dollar">HKD</option>
+    <option value="HRK" label="Croatian kuna">HRK</option>
+    <option value="HTG" label="Haitian gourde">HTG</option>
+    <option value="HUF" label="Hungarian forint">HUF</option>
+    <option value="IDR" label="Indonesian rupiah">IDR</option>
+    <option value="ILS" label="Israeli new shekel">ILS</option>
+    <option value="IMP" label="Manx pound">IMP</option>
+    <option value="INR" label="Indian rupee">INR</option>
+    <option value="IQD" label="Iraqi dinar">IQD</option>
+    <option value="IRR" label="Iranian rial">IRR</option>
+    <option value="ISK" label="Icelandic króna">ISK</option>
+    <option value="JEP" label="Jersey pound">JEP</option>
+    <option value="JMD" label="Jamaican dollar">JMD</option>
+    <option value="JOD" label="Jordanian dinar">JOD</option>
+    <option value="JPY" label="Japanese yen">JPY</option>
+    <option value="KES" label="Kenyan shilling">KES</option>
+    <option value="KGS" label="Kyrgyzstani som">KGS</option>
+    <option value="KHR" label="Cambodian riel">KHR</option>
+    <option value="KID" label="Kiribati dollar">KID</option>
+    <option value="KMF" label="Comorian franc">KMF</option>
+    <option value="KPW" label="North Korean won">KPW</option>
+    <option value="KRW" label="South Korean won">KRW</option>
+    <option value="KWD" label="Kuwaiti dinar">KWD</option>
+    <option value="KYD" label="Cayman Islands dollar">KYD</option>
+    <option value="KZT" label="Kazakhstani tenge">KZT</option>
+    <option value="LAK" label="Lao kip">LAK</option>
+    <option value="LBP" label="Lebanese pound">LBP</option>
+    <option value="LKR" label="Sri Lankan rupee">LKR</option>
+    <option value="LRD" label="Liberian dollar">LRD</option>
+    <option value="LSL" label="Lesotho loti">LSL</option>
+    <option value="LYD" label="Libyan dinar">LYD</option>
+    <option value="MAD" label="Moroccan dirham">MAD</option>
+    <option value="MDL" label="Moldovan leu">MDL</option>
+    <option value="MGA" label="Malagasy ariary">MGA</option>
+    <option value="MKD" label="Macedonian denar">MKD</option>
+    <option value="MMK" label="Burmese kyat">MMK</option>
+    <option value="MNT" label="Mongolian tögrög">MNT</option>
+    <option value="MOP" label="Macanese pataca">MOP</option>
+    <option value="MRU" label="Mauritanian ouguiya">MRU</option>
+    <option value="MUR" label="Mauritian rupee">MUR</option>
+    <option value="MVR" label="Maldivian rufiyaa">MVR</option>
+    <option value="MWK" label="Malawian kwacha">MWK</option>
+    <option value="MXN" label="Mexican peso">MXN</option>
+    <option value="MYR" label="Malaysian ringgit">MYR</option>
+    <option value="MZN" label="Mozambican metical">MZN</option>
+    <option value="NAD" label="Namibian dollar">NAD</option>
+    <option value="NGN" label="Nigerian naira">NGN</option>
+    <option value="NIO" label="Nicaraguan córdoba">NIO</option>
+    <option value="NOK" label="Norwegian krone">NOK</option>
+    <option value="NPR" label="Nepalese rupee">NPR</option>
+    <option value="NZD" label="New Zealand dollar">NZD</option>
+    <option value="OMR" label="Omani rial">OMR</option>
+    <option value="PAB" label="Panamanian balboa">PAB</option>
+    <option value="PEN" label="Peruvian sol">PEN</option>
+    <option value="PGK" label="Papua New Guinean kina">PGK</option>
+    <option value="PHP" label="Philippine peso">PHP</option>
+    <option value="PKR" label="Pakistani rupee">PKR</option>
+    <option value="PLN" label="Polish złoty">PLN</option>
+    <option value="PRB" label="Transnistrian ruble">PRB</option>
+    <option value="PYG" label="Paraguayan guaraní">PYG</option>
+    <option value="QAR" label="Qatari riyal">QAR</option>
+    <option value="RON" label="Romanian leu">RON</option>
+    <option value="RON" label="Romanian leu">RON</option>
+    <option value="RSD" label="Serbian dinar">RSD</option>
+    <option value="RUB" label="Russian ruble">RUB</option>
+    <option value="RWF" label="Rwandan franc">RWF</option>
+    <option value="SAR" label="Saudi riyal">SAR</option>
+    <option value="SEK" label="Swedish krona">SEK</option>
+    <option value="SGD" label="Singapore dollar">SGD</option>
+    <option value="SHP" label="Saint Helena pound">SHP</option>
+    <option value="SLL" label="Sierra Leonean leone">SLL</option>
+    <option value="SLS" label="Somaliland shilling">SLS</option>
+    <option value="SOS" label="Somali shilling">SOS</option>
+    <option value="SRD" label="Surinamese dollar">SRD</option>
+    <option value="SSP" label="South Sudanese pound">SSP</option>
+    <option value="STN" label="São Tomé and Príncipe dobra">STN</option>
+    <option value="SYP" label="Syrian pound">SYP</option>
+    <option value="SZL" label="Swazi lilangeni">SZL</option>
+    <option value="THB" label="Thai baht">THB</option>
+    <option value="TJS" label="Tajikistani somoni">TJS</option>
+    <option value="TMT" label="Turkmenistan manat">TMT</option>
+    <option value="TND" label="Tunisian dinar">TND</option>
+    <option value="TOP" label="Tongan paʻanga">TOP</option>
+    <option value="TRY" label="Turkish lira">TRY</option>
+    <option value="TTD" label="Trinidad and Tobago dollar">TTD</option>
+    <option value="TVD" label="Tuvaluan dollar">TVD</option>
+    <option value="TWD" label="New Taiwan dollar">TWD</option>
+    <option value="TZS" label="Tanzanian shilling" selected="selected">TZS</option>
+    <option value="UAH" label="Ukrainian hryvnia">UAH</option>
+    <option value="UGX" label="Ugandan shilling">UGX</option>
+    <option value="USD" label="United States dollar">USD</option>
+    <option value="UYU" label="Uruguayan peso">UYU</option>
+    <option value="UZS" label="Uzbekistani soʻm">UZS</option>
+    <option value="VES" label="Venezuelan bolívar soberano">VES</option>
+    <option value="VND" label="Vietnamese đồng">VND</option>
+    <option value="VUV" label="Vanuatu vatu">VUV</option>
+    <option value="WST" label="Samoan tālā">WST</option>
+    <option value="XAF" label="Central African CFA franc">XAF</option>
+    <option value="XCD" label="Eastern Caribbean dollar">XCD</option>
+    <option value="XOF" label="West African CFA franc">XOF</option>
+    <option value="XPF" label="CFP franc">XPF</option>
+    <option value="ZAR" label="South African rand">ZAR</option>
+    <option value="ZMW" label="Zambian kwacha">ZMW</option>
+    <option value="ZWB" label="Zimbabwean bonds">ZWB</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="inputClientCompany"><i class="fa fa-cc-mastercard" style="font-size:27px"></i>Card number</label>
+    <input type="text" id="cardnum" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="inputDescription">Any recommendation?</label>
+    <textarea id="recom" class="form-control" rows="4" placeholder="whatever you want to tell us"></textarea>
+  </div>
+
+
+
+
+
+<div class="modal-footer justify-content-between">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<button type="button" class="btn btn-primary" style="background-color:rgb(152, 29, 223);border:none" id="req">Donate</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- /.content-wrapper -->
+
+<!-- Control Sidebar -->
+<!-- /.control-sidebar -->
+
+
+  <!-- Main Footer -->
+
+
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<div id="fb-root"></div>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<script>
+  $('#currency').select2();
+</script>
+</body>
+</html>

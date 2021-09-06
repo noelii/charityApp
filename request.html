@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="donation saves lifes" /> 
+<meta property="og:description" content="DONATE TO HELP PEOPLE IN TROUBLE" /> 
+<meta property="og:image" content="http://charity.potex.co.tz/dist/img/logo.jpg" /><meta property="og:image" content="http://www.[ourwebsite].com/overdriven-blues-music-tshirt-art-black.JPG" />
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://charity.potex.co.tz/main.html" />
+<meta property="og:site_name" content="the charity system" />      
+<meta name="title" content="the best way for your donation" />
+<meta name="description" content="donate to save life, make the worl a better place" />
+<link rel="image_src" href="http://charity.potex.co.tz/dist/img/logo.jpg" />
+
+
+  <title>charity main</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="sweet.js"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0" nonce="XuOGPJqz"></script>
+  <script>
+  $('document').ready(function(){
+    $.get("../eng/controllers/controller.donor.php",
+    {
+    request: "loggedin",
+    
+    },
+  function(data){
+ 
+      if(data!="true")
+      {
+        window.location.replace("../index.html");
+      }
+   
+  });
+  
+    var searchParams = new URLSearchParams(window.location.search);
+   
+
+
+     var reid=parseInt(searchParams.get('postid'));
+
+  $.get("../eng/controllers/controller.main.php",
+  {
+    request:"onereq",
+    reqid:reid
+    
+  },
+  function(data){
+   var dataobj=$.parseJSON(data);
+   
+   var totelem="";
+     for(var z in dataobj.name)
+     {
+       var img=dataobj.img[z];
+       var name=dataobj.name[z];
+       var title=dataobj.title[z];
+       var budget=dataobj.budget[z];
+       var desc=dataobj.desc[z];
+       var idd=dataobj.ids[z];
+        var elem='<div class="content">';
+          elem+='<div class="container" id="reqq">';
+          elem+='<div class="card">';
+          elem+='<div class="card-header p-2 " >';
+          elem+='<div class="user-block" style="margin-right:5%">';
+          elem+='<img class="img-circle img-bordered-sm" src="dist/img/'+img+'" >';
+          elem+='<span class="username">';
+          elem+='<a href="#">'+name+'</a>';
+          elem+='</span>';
+          elem+='</div>';
+          elem+='<div class="row">';
+          elem+='<div class="col-lg-5">';
+          elem+='<span><b>'+title+'</b></span>';
+          elem+='</div>';
+          elem+='<div class="col-md-4">';
+          elem+='<img class="img-circle img-bordered-sm" src="dist/img/beg.png" alt="beg icon" style="height:85%;width:20%">';
+          elem+='<span>'+budget+'TZS required</span>';
+          elem+='</div>';
+          elem+='<div class="col-md-3">';
+          elem+='<span>';
+          elem+='<a href="#" class="link-black text-sm">';
+          elem+='<button style="font-size:22px; border:solid 1px #ccc;" id="'+idd+'" data-toggle="modal" data-target="#modal-default">Donate<i class="fa fa-cc-paypal" style="color:blue" ></i></button>';
+          elem+='</a>';
+          elem+='</span>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='<div class="card-body">';
+          elem+='<div class="tab-content">';
+          elem+='<div class="active tab-pane" id="activity">';
+          elem+='<div class="post">';
+          elem+='<p>'+desc+'</p>';
+          elem+='<span class="float-right">';
+          elem+='<a href="#" class="link-black text-sm">';
+          elem+='<i class="far fa-comments mr-1"></i> Comments (5)';
+          elem+='</a>';
+          elem+='</span>';
+          elem+='<div class="fb-share-button" id="'+idd+'" onclick="share(this)"><a href="#"><i class="fa fa-facebook-square"></i>share</a></div>';
+          elem+='<textarea cols="3" class="form-control form-control-sm"  placeholder="Type a comment"  id="'+idd+'"></textarea>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          elem+='</div>';
+          totelem+=elem;
+          
+   
+
+     }
+   
+   
+   $('#reqrapper').append(totelem);
+   $('#loader').hide();
+    
+  
+    
+    
+  });
+
+  var idx=""; //request id;
+  $('#reqrapper').click(function(z){
+  //z.preventDefault();
+ if(z.target.tagName=="BUTTON")
+ {
+  idx=parseInt(z.target.attributes.id.value);
+ // swal("",""+idx,"info");
+  /*$.get("../eng/controllers/controller.ngo.php",
+    {
+    request: "deletefile",
+    id:idx
+    },
+  function(data){
+    load_uploads();
+  }
+  );*/
+ }
+});
+
+//the comments
+
+$('textarea').eq(3).focus(function(z){
+  //z.preventDefault();
+  var idx1=parseInt(z.target.attributes.id.value);
+ swal("",""+idx1,"info");
+ if(z.target.tagName=="input")
+ {
+
+  /*$.get("../eng/controllers/controller.ngo.php",
+    {
+    request: "deletefile",
+    id:idx
+    },
+  function(data){
+    load_uploads();
+  }
+  );*/
+ }
+});
+$('.card').each(function(index,obj){
+
+console.log(index);
+
+
+
+});
+
+$('#req').click(function(r){
+
+r.preventDefault();
+
+var recom=$('#recom').val().toString();
+var amount=parseFloat($('#amount').val().toString());
+var req="donate";
+
+if(!isNaN(amount))
+{
+$.get("../eng/controllers/controller.donor.php",
+  {
+  request: req,
+  rec:recom,
+  amount:amount,
+  reqid:idx
+  },
+function(data){
+  if(data=="success"){swal("donation successful","","info"); $('#modal-default').modal('hide');}
+  else{swal("donation failed,try again","","info");}
+
+   
+   $('#amount').val("");
+   $('#recom').val("");
+ 
+});
+}else{ swal("please enter amount","","info"); }
+
+});
+
+
+
+
+
+});
+
+  function share(x)
+  {
+    var content=x.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML;
+    var com=encodeURIComponent(x.id); 
+    window.open("https://www.facebook.com/sharer.php?u=http://127.0.0.1/charity?postid="+com);
+    //alert(content);
+
+
+
+  }
+
+  </script>
+</head>
+<body class="hold-transition layout-top-nav">
+  <!-- Navbar -->
+
+  <!-- /.navbar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" id="reqrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0" style="color:rgb(168, 39, 243)">Donations requests </h1>
+          </div><!-- /.col -->
+      
+      </div><!-- /.container-fluid -->
+    </div>
+    <div class="tab-loading" id="loader" style="margin-left: 35%;margin-top: 10%;">
+      <div>
+        <h2 class="display-4">loading <i class="fa fa-sync fa-spin"></i></h2>
+      </div>
+      </div>
+    </div>
+    <!-- /.content-header -->
+
+    
+
+<!-- /.content -->
+<div class="modal fade" id="modal-default" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="color:  rgb(152, 29, 223);">Donate</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  <div class="form-group">
+    <label for="inputClientCompany">Amount</label>
+    <input type="text" id="amount" class="form-control" placeholder="ex 12000" required>
+  </div>
+  <div class="form-group">
+    <label for="inputDescription">Any recommendation?</label>
+    <textarea id="recom" class="form-control" rows="4" placeholder="whatever you want to tell us"></textarea>
+  </div>
+
+
+
+
+
+<div class="modal-footer justify-content-between">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<button type="button" class="btn btn-primary" style="background-color:rgb(152, 29, 223);border:none" id="req">Donate</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- /.content-wrapper -->
+
+<!-- Control Sidebar -->
+<!-- /.control-sidebar -->
+
+
+  <!-- Main Footer -->
+
+
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<div id="fb-root"></div>
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+</body>
+</html>

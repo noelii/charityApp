@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="sweet.js"></script>
+  <script>
+$('document').ready(function(){
+
+  $.get("../eng/controllers/controller.donor.php",
+    {
+    request: "alldonations",
+    },
+  function(data){
+       if(data!="" && data!="null")
+       {
+       // $('#loader').show();
+         $('.card-body').html(data);
+         $('#loader').hide();
+
+       }
+       else{
+
+         $('.card-body').html('<h1>no any donations yet</h1>');
+       }
+  }
+  );
+
+
+
+});
+
+
+  </script>
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="content-wrapper ">
+  <!-- Navbar -->
+
+  
+
+<div class="card">
+  <div class="card-header nav navbar navbar-expand navbar-white navbar-light border-bottom p-0" style="color:black">
+    <a href="#" class="brand-link" >
+      <img src="dist/img/donate.png" alt="charity system" class="brand-image img-circle elevation-3" style="opacity:1">
+      <span class="brand-text font-weight-light" style="font-weight: bold; color: rgb(152, 29, 223);" >My donations</span>
+    </a>
+  </div>
+  <div class="card-body">
+
+   
+
+  </div>
+
+</div>
+<div class="content-header">
+<div class="tab-loading" id="loader" style="margin-left: 35%;margin-top: 10%;">
+  <div>
+    <h2 class="display-4">loading <i class="fa fa-sync fa-spin"></i></h2>
+  </div>
+  </div>
+  </div>
+  </div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+</body>
+</html>

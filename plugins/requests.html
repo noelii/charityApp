@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="sweet.js"></script>
+  <script>
+  $('document').ready(function(){
+  //new request handling
+  $("#regimages").on("change", function() {
+    if ($("#regimages")[0].files.length > 4) {
+        swal("You can select only 4 images","","info");
+    }
+});
+  $('#myform').submit(function(r){
+
+  r.preventDefault();
+  if ($("#regimages")[0].files.length > 4) {
+        swal("You can select only 4 images","","info");
+        return false;
+    }
+  var form=new FormData($('#myform')[0]);
+   
+  for (var value of form.values()) {
+   console.log(value);
+}
+  var title=$('#inputName').val().toString();
+  var desc=$('#inputDescription').val().toString();
+  var budget=$('#inputClientCompany').val().toString();
+  var strategy=$('#str').val().toString();
+  var req="new request";
+if(true)
+{
+  $.ajax({
+    url:"../eng/controllers/controller.ngo.php",
+    data:form,
+    processData: false,
+    contentType: false,
+    type:"POST",
+    request: req, 
+    success:function(data){
+      $('#myform')[0].reset();
+     swal(data,"","info");
+   
+  }
+});
+}else{ swal("please fill in all fields","","info"); }
+
+  });
+//all requests
+  $.get("../eng/controllers/controller.ngo.php",
+    {
+    request: "allreq",
+    },
+  function(data){
+ 
+     $('#allreq').html(data);
+   
+  });
+
+
+
+  })
+   
+ 
+  </script>
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="content-wrapper">
+  <!-- Navbar -->
+
+     <!-- modal-->
+     <div class="row">
+     <div class="col-md-6">
+     <div class="modal fade" id="modal-default" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" style="color:  rgb(152, 29, 223);">New request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+      <div class="form-group">
+        <form action="" method="post" name="myform" id="myform" enctype="multipart/form-data">
+        <label for="inputName">Request title</label>
+        <input type="text" id="inputName" name="title" class="form-control" placeholder="title">
+      </div>
+      <div class="form-group">
+        <label for="inputDescription">Request Description</label>
+        <textarea id="inputDescription" class="form-control" rows="4" name="desc" placeholder="tell in details about what the requested fund is for and it's impact"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="inputClientCompany">required Budget in TZS</label>
+        <input type="text" id="inputClientCompany" class="form-control" name="budget" placeholder="ex 12000 tzs" >
+      </div>
+      <div class="form-group">
+        <label for="inputDescription">Strategy</label>
+        <textarea id="str" class="form-control" name="str" rows="4" placeholder="tell in brief about how are you going to use the money to reach the goal"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="inputDescription">Choose images</label>
+        <input type="file" id="regimages" name="reqimages[]" class="form-control" multiple>
+      </div>
+
+
+
+
+
+<div class="modal-footer justify-content-between">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <input  type="submit" class="btn btn-primary" name="mysub" style="background-color:rgb(152, 29, 223);border:none" id="req" value="save and post request"></input>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+  <div class="card-header nav navbar navbar-expand navbar-white navbar-light border-bottom p-0" style="color:black">
+    <a href="#" class="brand-link" >
+      <img src="dist/img/beg.png" alt="charity system" class="brand-image img-circle elevation-3" style="opacity:1">
+      <span class="brand-text font-weight-light" style="font-weight: bold; color: rgb(152, 29, 223);" >Requests</span>
+    </a>
+ 
+ 
+    <button type="button" class="btn btn-block btn-primary btn-xs" style="width:10%;margin-left: 10%;background-color: rgb(152, 29, 223); border-radius: 7px; border:none; color:white" data-toggle="modal" data-target="#modal-default">New Request</button>
+  </div>
+    <!-- ./card-header -->
+    <div class="card-body ">
+      <table class="table table-hover">
+        <tbody id="allreq">
+         
+        </tbody>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+</body>
+</html>
